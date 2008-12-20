@@ -5,6 +5,7 @@
 // 081220 made into a quark, added loop feature
 
 //todo:
+//		memStore instead of writeOnce
 //		gui quad player with listview, xfadetime, play/stop, pause/resume, vol
 //		gui stereo player with listview, xfadetime, play/stop, pause/resume, vol
 
