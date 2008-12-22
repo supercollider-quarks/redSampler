@@ -10,23 +10,23 @@
 p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
 p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Helvetica; min-height: 22.0px}
 p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; color: #0d32ac; min-height: 14.0px}
+p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; color: #193ba4; min-height: 14.0px}
 p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; color: #001fe8}
 p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; min-height: 12.0px}
 p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco}
-p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #062cb0}
-p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #902f20}
+p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #1337a8}
+p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #7a3827}
 p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #606060}
 span.s1 {font: 18.0px Helvetica}
-span.s2 {text-decoration: underline ; color: #083aec}
+span.s2 {text-decoration: underline ; color: #1949e0}
 span.s3 {color: #000000}
 span.s4 {text-decoration: underline}
-span.s5 {color: #45691f}
+span.s5 {color: #516528}
 span.s6 {color: #606060}
-span.s7 {color: #902f20}
-span.s8 {color: #2b6f11}
-span.s9 {color: #ad1d13}
-span.s10 {color: #3b6c19}
+span.s7 {color: #7a3827}
+span.s8 {color: #45691f}
+span.s9 {color: #902f20}
+span.s10 {color: #4c6724}
 span.Apple-tab-span {white-space:pre}
 </style>
 </head>
@@ -61,6 +61,8 @@ span.Apple-tab-span {white-space:pre}
 <p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>stop all currently playing voices for all keys.<span class="Apple-converted-space">  </span>default releasetime is 0.4 seconds.</p>
 <p class="p1"><b><span class="Apple-tab-span">	</span>free</b></p>
 <p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>clear keys, close files, free synths and buffers.</p>
+<p class="p1"><span class="Apple-tab-span">	</span><b>freeKey(key)</b></p>
+<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>clear a key, close its file and free its synth and buffer.</p>
 <p class="p1"><span class="Apple-tab-span">	</span><b>loadedKeys</b></p>
 <p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>report which keys have been preloaded with soundfiles.</p>
 <p class="p1"><b><span class="Apple-tab-span">	</span>numFrames</b></p>
@@ -85,10 +87,10 @@ span.Apple-tab-span {white-space:pre}
 <p class="p7">s.boot;</p>
 <p class="p8"><span class="s3">a= </span>RedDiskInSampler<span class="s3">(s);</span></p>
 <p class="p6"><br></p>
-<p class="p9">//-- setting up which samples to use and preload them</p>
-<p class="p10"><span class="s3">a.preload(</span><span class="s5">\snd1</span><span class="s3">, </span>"sounds/a11wlk01-44_1.aiff"<span class="s3">);</span></p>
-<p class="p9"><span class="s3">a.preload(</span><span class="s5">\snd2</span><span class="s3">, </span><span class="s6">"sounds/break"</span><span class="s3">);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//add your own soundfile</p>
-<p class="p10"><span class="s3">a.preload(</span><span class="s5">\snd3</span><span class="s3">, </span>"sounds/a11wlk01-44_1.aiff"<span class="s3">, 44100);<span class="Apple-tab-span">	</span></span><span class="s7">//offset 44100 samples</span></p>
+<p class="p9">//-- setting up which samples to use and prepare them</p>
+<p class="p10"><span class="s3">a.prepareForPlay(</span><span class="s5">\snd1</span><span class="s3">, </span>"sounds/a11wlk01-44_1.aiff"<span class="s3">);</span></p>
+<p class="p7">a.prepareForPlay(<span class="s5">\snd2</span>, <span class="s6">"sounds/break"</span>);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="s7">//add your own soundfile</span></p>
+<p class="p7">a.prepareForPlay(<span class="s5">\snd3</span>, <span class="s6">"sounds/a11wlk01-44_1.aiff"</span>, 44100);<span class="Apple-tab-span">	</span><span class="s7">//offset 44100 samples</span></p>
 <p class="p6"><br></p>
 <p class="p9">//-- play</p>
 <p class="p9"><span class="s3">a.play(</span><span class="s5">\snd1</span><span class="s3">);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//play the whole soundfile</p>

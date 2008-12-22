@@ -10,22 +10,22 @@
 p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
 p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Helvetica; min-height: 22.0px}
 p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; color: #0024b5; min-height: 14.0px}
+p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; color: #062cb0; min-height: 14.0px}
 p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; color: #001fe8}
 p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; min-height: 12.0px}
 p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco}
-p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #0019ba}
-p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #ad1d13}
+p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #0024b5}
+p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #9d281b}
 p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #606060}
-p.p11 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #902f20}
+p.p11 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #843424}
 span.s1 {font: 18.0px Helvetica}
-span.s2 {color: #0022f8}
+span.s2 {color: #0030f2}
 span.s3 {color: #000000}
 span.s4 {text-decoration: underline}
-span.s5 {color: #2b6f11}
+span.s5 {color: #3b6c19}
 span.s6 {color: #606060}
-span.s7 {color: #ad1d13}
-span.s8 {color: #3b6c19}
+span.s7 {color: #9d281b}
+span.s8 {color: #45691f}
 span.Apple-tab-span {white-space:pre}
 </style>
 </head>
@@ -46,10 +46,10 @@ span.Apple-tab-span {white-space:pre}
 <p class="p7">s.boot;</p>
 <p class="p8"><span class="s3">a= </span>RedDiskInSamplerGiga<span class="s3">(s);</span></p>
 <p class="p6"><br></p>
-<p class="p9">//-- setting up which samples to use and preload them</p>
-<p class="p10"><span class="s3">a.preload(</span><span class="s5">\snd1</span><span class="s3">, </span>"sounds/a11wlk01-44_1.aiff"<span class="s3">);</span></p>
-<p class="p9"><span class="s3">a.preload(</span><span class="s5">\snd2</span><span class="s3">, </span><span class="s6">"sounds/break"</span><span class="s3">);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//add your own soundfile</p>
-<p class="p10"><span class="s3">a.preload(</span><span class="s5">\snd3</span><span class="s3">, </span>"sounds/a11wlk01-44_1.aiff"<span class="s3">, 44100);<span class="Apple-tab-span">	</span></span><span class="s7">//offset 44100 samples</span></p>
+<p class="p9">//-- setting up which samples to use and prepare them</p>
+<p class="p10"><span class="s3">a.prepareForPlay(</span><span class="s5">\snd1</span><span class="s3">, </span>"sounds/a11wlk01-44_1.aiff"<span class="s3">);</span></p>
+<p class="p7">a.prepareForPlay(<span class="s5">\snd2</span>, <span class="s6">"sounds/break"</span>);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="s7">//add your own soundfile</span></p>
+<p class="p7">a.prepareForPlay(<span class="s5">\snd3</span>, <span class="s6">"sounds/a11wlk01-44_1.aiff"</span>, 44100);<span class="Apple-tab-span">	</span><span class="s7">//offset 44100 samples</span></p>
 <p class="p6"><br></p>
 <p class="p9">//-- play</p>
 <p class="p9"><span class="s3">a.play(</span><span class="s5">\snd1</span><span class="s3">);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//play the whole soundfile</p>

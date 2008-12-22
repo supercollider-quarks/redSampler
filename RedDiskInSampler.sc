@@ -5,14 +5,10 @@ RedDiskInSampler : RedAbstractSampler {				//playing sounds from disk
 	var <>numFrames= 32768;							//preload buffer size in samples
 	*initClass {
 		StartUp.add{
-			4.do{|i|								//change here for more channels than quad
-				SynthDef.writeOnce("redDiskInSampler-"++(i+1), {
-					|i_out= 0, bufnum, amp= 0.7, attack= 0.01, sustain, release= 0.1, gate= 1|
-					var src= DiskIn.ar(
-						i+1,
-						bufnum,
-						0
-					);
+			8.do{|i|								//change here for more channels than 8
+				("SynthDef('redDiskInSampler-"++(i+1)++"', {
+					|i_out= 0, bufnum, amp= 0.7, attack= 0.01, sustain, release= 0.1, gate= 1, ctrl= #"++1.dup(i+1)++", lag= 0.1|
+					var src= DiskIn.ar("++(i+1)++", bufnum, 0);
 					var env= EnvGen.kr(
 						Env(#[0, 1, 1, 0], [attack, sustain, release], -4),
 						gate,
@@ -21,15 +17,11 @@ RedDiskInSampler : RedAbstractSampler {				//playing sounds from disk
 						1,
 						2						//doneAction
 					);
-					Out.ar(i_out, src*env);
-				}, [\ir]);
-				SynthDef.writeOnce("redDiskInSampler-"++(i+1)++"loop", {
-					|i_out= 0, bufnum, amp= 0.7, attack= 0.01, release= 0.1, gate= 1|
-					var src= DiskIn.ar(
-						i+1,
-						bufnum,
-						1
-					);
+					Out.ar(i_out, src*env*Ramp.kr(ctrl, lag));
+				}, #['ir']).store").interpret;
+				("SynthDef('redDiskInSampler-"++(i+1)++"loop', {
+					|i_out= 0, bufnum, amp= 0.7, attack= 0.01, release= 0.1, gate= 1, ctrl= #"++1.dup(i+1)++", lag= 0.1|
+					var src= DiskIn.ar("++(i+1)++", bufnum, 1);
 					var env= EnvGen.kr(
 						Env(#[0, 1, 0], [attack, release], -4, 1),
 						gate,
@@ -38,8 +30,8 @@ RedDiskInSampler : RedAbstractSampler {				//playing sounds from disk
 						1,
 						2						//doneAction
 					);
-					Out.ar(i_out, src*env);
-				}, [\ir]);
+					Out.ar(i_out, src*env*Ramp.kr(ctrl, lag));
+				}, #['ir']).store").interpret;
 			}
 		}
 	}
@@ -50,7 +42,7 @@ RedDiskInSampler : RedAbstractSampler {				//playing sounds from disk
 
 RedDiskInSamplerVoice : RedAbstractSamplerVoice {
 	defName {^"redDiskInSampler-"++channels}
-	play {|attack, sustain, release, amp, out, group, loop|
+	play {|attack, sustain, release, amp, out, group, loop, ctrl|
 		var name= this.defName;
 		if(loop==1, {name= name++"loop"});
 		isPlaying= true;
