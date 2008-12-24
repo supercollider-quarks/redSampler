@@ -5,10 +5,10 @@ RedSampler : RedAbstractSampler {					//playing buffers in ram
 	*initClass {
 		StartUp.add{
 			8.do{|i|								//change here for more channels than 8
-				("SynthDef('redSampler-"++(i+1)++"', {
-					|i_out= 0, bufnum, amp= 0.7, attack= 0.01, sustain, release= 0.1, gate= 1, offset= 0, ctrl= #"++1.dup(i+1)++", lag= 0.1|
+				SynthDef("redSampler-"++(i+1), {
+					|i_out= 0, bufnum, amp= 0.7, attack= 0.01, sustain, release= 0.1, gate= 1, offset= 0|
 					var src= PlayBuf.ar(
-						"++(i+1)++",
+						i+1,
 						bufnum,
 						BufRateScale.ir(bufnum),
 						1,
@@ -23,12 +23,12 @@ RedSampler : RedAbstractSampler {					//playing buffers in ram
 						1,
 						2						//doneAction
 					);
-					Out.ar(i_out, src*env*Ramp.kr(ctrl, lag));
-				}, #['ir']).store").interpret;
-				("SynthDef('redSampler-"++(i+1)++"loop', {
-					|i_out= 0, bufnum, amp= 0.7, attack= 0.01, release= 0.1, gate= 1, offset= 0, ctrl= #"++1.dup(i+1)++", lag= 0.1|
+					Out.ar(i_out, src*env);
+				}, #['ir']).store;
+				SynthDef("redSampler-"++(i+1)++"loop", {
+					|i_out= 0, bufnum, amp= 0.7, attack= 0.01, release= 0.1, gate= 1, offset= 0|
 					var src= PlayBuf.ar(
-						"++(i+1)++",
+						i+1,
 						bufnum,
 						BufRateScale.ir(bufnum),
 						1,
@@ -43,8 +43,8 @@ RedSampler : RedAbstractSampler {					//playing buffers in ram
 						1,
 						2						//doneAction
 					);
-					Out.ar(i_out, src*env*Ramp.kr(ctrl, lag));
-				}, #['ir']).store").interpret;
+					Out.ar(i_out, src*env);
+				}, #['ir']).store;
 			}
 		}
 	}

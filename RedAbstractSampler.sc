@@ -3,7 +3,7 @@
 // 060916 rewrite from scratch
 // 070711 major rewrite again -thanks Till.  generalised, object style, fix for the voice release issue, using nodewatcher, abstract classes, RedSampler class etc.  but only one interface change: preload is not prepareForPlay.
 // 081220 made into a quark, added loop feature
-// 081221 now 8ch soudfiles maximum, added freeKey, added ctrl and lag
+// 081221 now 8ch soudfiles maximum, added freeKey
 
 //todo:
 //		gui quad player with listview, xfadetime, play/stop, pause/resume, vol
