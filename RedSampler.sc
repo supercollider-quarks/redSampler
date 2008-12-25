@@ -18,12 +18,12 @@ RedSampler : RedAbstractSampler {					//playing buffers in ram
 					var env= EnvGen.kr(
 						Env(#[0, 1, 1, 0], [attack, sustain, release], -4),
 						gate,
-						amp,
+						1,
 						0,
 						1,
 						2						//doneAction
 					);
-					Out.ar(i_out, src*env);
+					Out.ar(i_out, src*env*amp);
 				}, #['ir']).store;
 				SynthDef("redSampler-"++(i+1)++"loop", {
 					|i_out= 0, bufnum, amp= 0.7, attack= 0.01, release= 0.1, gate= 1, offset= 0|
@@ -38,12 +38,12 @@ RedSampler : RedAbstractSampler {					//playing buffers in ram
 					var env= EnvGen.kr(
 						Env(#[0, 1, 0], [attack, release], -4, 1),
 						gate,
-						amp,
+						1,
 						0,
 						1,
 						2						//doneAction
 					);
-					Out.ar(i_out, src*env);
+					Out.ar(i_out, src*env*amp);
 				}, #['ir']).store;
 			}
 		}

@@ -4,6 +4,7 @@
 // 070711 major rewrite again -thanks Till.  generalised, object style, fix for the voice release issue, using nodewatcher, abstract classes, RedSampler class etc.  but only one interface change: preload is not prepareForPlay.
 // 081220 made into a quark, added loop feature
 // 081221 now 8ch soudfiles maximum, added freeKey
+// 081225 added amp_
 
 //todo:
 //		gui quad player with listview, xfadetime, play/stop, pause/resume, vol
@@ -69,6 +70,9 @@ RedAbstractSampler {
 			voc.stop(release);
 		});
 	}
+	amp_ {|val|
+		keys.do{|voices| voices.do{|x| x.amp_(val)}}
+	}
 	flush {|release= 0.4|
 		keys.do{|voices| voices.do{|x| x.stop(release)}}
 	}
@@ -102,6 +106,9 @@ RedAbstractSamplerVoice {
 	}
 	play {|attack= 0, sustain, release= 0, amp= 0.7, out= 0, group, loop= 0|
 		^this.subclassResponsibility(thisMethod)
+	}
+	amp_ {|val|
+		synth.set(\amp, val);
 	}
 	stop {|release= 0.4|
 		isReleased= true;
