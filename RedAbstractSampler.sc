@@ -76,10 +76,10 @@ RedAbstractSampler {
 		});
 	}
 	amp_ {|val|
-		keys.do{|voices| voices.do{|x| x.amp_(val)}}
+		keys.do{|voices| voices.do{|x| x.amp_(val)}};
 	}
 	flush {|release= 0.4|
-		keys.do{|voices| voices.do{|x| x.stop(release)}}
+		keys.do{|voices| voices.do{|x| x.stop(release)}};
 	}
 	freeKey {|key|
 		var voices= keys.removeAt(key);
