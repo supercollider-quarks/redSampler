@@ -32,6 +32,7 @@ RedAbstractSampler {
 	}
 	preload {|...args| this.prepareForPlay(*args)}		//for backwards compability
 	loadedKeys {^keys.keys}
+	playingKeys {^this.loadedKeys.select{|x| this.isPlaying(x)}}
 	length {|key|
 		var voices;
 		if((voices= keys[key]).notNil, {^voices[0].length}, {^nil});
@@ -47,6 +48,10 @@ RedAbstractSampler {
 	voicesLeft {|key|
 		var voices;
 		if((voices= keys[key]).notNil, {^voices.count{|x| x.isPlaying.not}}, {^nil});
+	}
+	isPlaying {|key|
+		var voices;
+		if((voices= keys[key]).notNil, {^voices.any{|x| x.isPlaying}}, {^false});
 	}
 	
 	//play with finite duration - if sustain=nil then use file length
