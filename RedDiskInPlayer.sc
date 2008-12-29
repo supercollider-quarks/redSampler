@@ -1,14 +1,14 @@
 //redFrik
 
 //todo:
-//colours and font from skin
-//avoid n_set node not found when setting volume
+//* colours and font from skin
+//* avoid n_set node not found when setting volume
 
 RedDiskInPlayer {
 	var <sampler, <isPlaying= false, <soundFiles, <win,
 		playIndex, bgcol, fgcol, incdecTask,
 		incView, decView, progressView, infoView, volNumView, volSldView,
-		envNumView, envSldView, listView, busView, loopView;
+		envNumView, envSldView, listView, busView, loopView, filterView;
 	*new {|server, bus= 0, numItems= 10|
 		^super.new.initRedDiskInPlayer(server, bus, numItems);
 	}
@@ -25,6 +25,7 @@ RedDiskInPlayer {
 		soundFiles= [];
 		
 		win= GUI.window.new(this.class.name, Rect(500, 200, w+10, h*15), false);
+		win.alpha_(0.9);
 		win.view.background= bgcol;
 		win.view.decorator= FlowLayout(win.view.bounds);
 		
@@ -64,10 +65,25 @@ RedDiskInPlayer {
 			.string_("env");
 		win.view.decorator.nextLine;
 		
+		busView= GUI.numberBox.new(win, Rect(0, 0, w*0.25, h))
+			.boxColor_(bgcol)
+			.typingColor_(Color.white)
+			.value_(argBus)
+			.action_({|view|
+				view.value= view.value.asInteger.max(0);
+			});
+		GUI.staticText.new(win, Rect(0, 0, GUI.stringBounds("bus", fnt).width, h))
+			.string_("bus");
+		win.view.decorator.shift(10, 0);
+		loopView= GUI.button.new(win, Rect(0, 0, w*0.4, h))
+			.states_([["loop", fgcol, Color.clear], ["loop", bgcol, fgcol]]);
+		win.view.decorator.nextLine;
+		
+		win.view.decorator.shift(10, 0);
 		incView= GUI.staticText.new(win, Rect(0, 0, w*0.4, h)).string_("0:00");
 		win.view.decorator.shift(10, 0);
 		decView= GUI.staticText.new(win, Rect(0, 0, w*0.4, h)).string_("0:00.0");
-		win.view.decorator.nextLine.shift(0, -4);
+		win.view.decorator.nextLine;
 		
 		progressView= GUI.multiSliderView.new(win, Rect(0, 0, w, h))
 			.indexIsHorizontal_(false)
@@ -102,12 +118,15 @@ RedDiskInPlayer {
 			});
 		win.view.decorator.nextLine;
 		
-		GUI.button.new(win, Rect(0, 0, w, h))
+		GUI.button.new(win, Rect(0, 0, w*0.4, h))
 			.states_([["folder...", fgcol, Color.clear]])
 			.action_({
 				if(sampler.notNil, {sampler.free});
 				GUI.dialog.getPaths({|x|
 					soundFiles= SoundFile.collect(PathName(x[0]).pathOnly++"*");
+					if(filterView.value>0, {
+						soundFiles= soundFiles.select{|x| x.numChannels==filterView.value};
+					});
 					soundFiles.do{|x, i|
 						sampler.prepareForPlay(i, x.path);
 					};
@@ -116,23 +135,19 @@ RedDiskInPlayer {
 				});
 				listView.focus;
 			}).focus;
-		
-		busView= GUI.numberBox.new(win, Rect(0, 0, w*0.25, h))
+		win.view.decorator.shift(10, 0);
+		filterView= GUI.numberBox.new(win, Rect(0, 0, w*0.2, h))
 			.boxColor_(bgcol)
 			.typingColor_(Color.white)
-			.value_(argBus)
+			.value_(0)
 			.action_({|view|
-				view.value= view.value.asInteger.max(0);
+				view.value= view.value.max(0).round;
 			});
-		GUI.staticText.new(win, Rect(0, 0, GUI.stringBounds("bus", fnt).width, h))
-			.string_("bus");
-		loopView= GUI.button.new(win, Rect(0, 0, win.view.decorator.indentedRemaining.width, h))
-			.states_([["loop", fgcol, Color.clear], ["loop", bgcol, fgcol]]);
-		
-		
+		GUI.staticText.new(win, Rect(0, 0, GUI.stringBounds("filter", fnt).width, h))
+			.string_("filter");
 		
 		win.view.children.do{|x| if(x.respondsTo('font_'), {x.font_(fnt)})};
-		win.bounds= win.bounds.setExtent(win.bounds.width, win.view.decorator.currentBounds.height+10);
+		win.bounds= win.bounds.setExtent(win.bounds.width, win.view.decorator.currentBounds.height+4);
 		CmdPeriod.doOnce({if(win.isClosed.not, {win.close})});
 		win.onClose= {incdecTask.stop; sampler.free};
 		win.front;
@@ -197,7 +212,7 @@ RedDiskInPlayer {
 	prUpdateInfo {|index|
 		var sf= soundFiles[index];
 		if(sf.notNil, {
-			decView.string= sf.duration.asTimeString;
+			decView.string= sf.duration.asTimeString(0.01);
 			infoView.string= "".scatList([
 				sf.numChannels,
 				sf.headerFormat,

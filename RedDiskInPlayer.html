@@ -10,14 +10,13 @@
 p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
 p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Helvetica; min-height: 22.0px}
 p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; color: #0000ff}
-p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; min-height: 12.0px}
-p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #0000bf}
-p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #000000; min-height: 12.0px}
-p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #000000}
-p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #bf0000}
+p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; min-height: 12.0px}
+p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #0019ba}
+p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco}
+p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #ad1d13}
 span.s1 {font: 18.0px Helvetica}
-span.s2 {color: #000000}
+span.s2 {text-decoration: underline ; color: #001fe8}
+span.s3 {color: #000000}
 span.Apple-tab-span {white-space:pre}
 </style>
 </head>
@@ -26,12 +25,18 @@ span.Apple-tab-span {white-space:pre}
 <p class="p2"><br></p>
 <p class="p1"><b>superclass: Object</b></p>
 <p class="p3"><br></p>
-<p class="p1">uses RedDiskInSampler to stream a soundfile from disk.</p>
+<p class="p1">uses [<a href="RedDiskInSampler.html"><span class="s2">RedDiskInSampler</span></a>] to stream soundfiles from disk.<span class="Apple-converted-space">  </span>use it to play back long soundfiles.</p>
 <p class="p3"><br></p>
-<p class="p4"><span class="s2">see also [<a href="RedDiskInSampler.html">RedDiskInSampler</a>]</span></p>
+<p class="p1">GUI:</p>
+<p class="p1"><span class="Apple-tab-span">	</span>'vol' - playback volume</p>
+<p class="p1"><span class="Apple-tab-span">	</span>'env' - attack and release time in seconds</p>
+<p class="p1"><span class="Apple-tab-span">	</span>'bus' - output bus index</p>
+<p class="p1"><span class="Apple-tab-span">	</span>'loop' - keep repeating the soundfile.<span class="Apple-converted-space">  </span>note: not smooth because of file preloading</p>
+<p class="p1"><span class="Apple-tab-span">	</span>'folder' - select a file to set path to all soundfiles</p>
+<p class="p1"><span class="Apple-tab-span">	</span>'filter' - 0 = all soundfiles, 1 = only mono files, 2 = stereo etc.</p>
 <p class="p3"><br></p>
 <p class="p1"><b><span class="Apple-tab-span">	</span>*new(server, bus, numItems)</b></p>
-<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>server - if nil then the default server is used (s).</p>
+<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>server - if nil then the default server will be used.</p>
 <p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>bus - output bus.<span class="Apple-converted-space">  </span>defaults to 0.</p>
 <p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>numItems - number of soundfiles visible in the list.<span class="Apple-converted-space">  </span>default 10.</p>
 <p class="p1"><span class="Apple-tab-span">	</span><b>&lt;sampler</b></p>
@@ -42,14 +47,15 @@ span.Apple-tab-span {white-space:pre}
 <p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>current files in list</p>
 <p class="p1"><span class="Apple-tab-span">	</span><b>bus</b></p>
 <p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>current outbut bus</p>
-<p class="p5"><br></p>
-<p class="p5"><br></p>
-<p class="p6"><span class="s2">a= </span>RedDiskInPlayer<span class="s2">(s);</span></p>
-<p class="p7"><br></p>
-<p class="p8">a.sampler</p>
-<p class="p8">a.isPlaying</p>
-<p class="p8">a.soundFiles</p>
-<p class="p8">a.bus</p>
-<p class="p9"><span class="s2">a.free<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//or close the window, or press cmdperiod</p>
+<p class="p1"><span class="Apple-tab-span">	</span><b>free</b></p>
+<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>closes the window and stops the synth</p>
+<p class="p4"><br></p>
+<p class="p4"><br></p>
+<p class="p5"><span class="s3">a= </span>RedDiskInPlayer<span class="s3">(s);</span></p>
+<p class="p6">a.sampler</p>
+<p class="p6">a.isPlaying</p>
+<p class="p6">a.soundFiles</p>
+<p class="p6">a.bus</p>
+<p class="p7"><span class="s3">a.free<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//or close the window, or press cmdperiod</p>
 </body>
 </html>

@@ -5,6 +5,7 @@
 // 081220 made into a quark, added loop feature
 // 081221 now 8ch soudfiles maximum, added freeKey
 // 081225 added amp_
+// 081228 added isPlaying, playingKeys, RedDiskInPlayer with helpfile
 
 //todo:
 //		gui quad player with listview, xfadetime, play/stop, pause/resume, vol
