@@ -44,7 +44,7 @@ RedDiskInPlayer {
 				volNumView.value= volSpec.map(view.value).round(0.1);
 				if(isPlaying, {sampler.amp= volNumView.value.dbamp});
 			});
-		GUI.staticText.new(win, Rect(0, 0, GUI.stringBounds("vol", fnt).width, h))
+		GUI.staticText.new(win, Rect(0, 0, "vol".bounds(fnt).width, h))
 			.string_("vol");
 		win.view.decorator.nextLine;
 		
@@ -61,7 +61,7 @@ RedDiskInPlayer {
 			.action_({|view|
 				envNumView.value= (view.value*10).round(0.1);
 			});
-		GUI.staticText.new(win, Rect(0, 0, GUI.stringBounds("env", fnt).width, h))
+		GUI.staticText.new(win, Rect(0, 0, "env".bounds(fnt).width, h))
 			.string_("env");
 		win.view.decorator.nextLine;
 		
@@ -72,7 +72,7 @@ RedDiskInPlayer {
 			.action_({|view|
 				view.value= view.value.asInteger.max(0);
 			});
-		GUI.staticText.new(win, Rect(0, 0, GUI.stringBounds("bus", fnt).width, h))
+		GUI.staticText.new(win, Rect(0, 0, "bus".bounds(fnt).width, h))
 			.string_("bus");
 		win.view.decorator.shift(10, 0);
 		loopView= GUI.button.new(win, Rect(0, 0, w*0.4, h))
@@ -99,6 +99,7 @@ RedDiskInPlayer {
 		win.view.decorator.nextLine;
 		
 		listView= GUI.listView.new(win, Rect(0, 0, w, h*argNumItems))
+			.background_(bgcol)
 			.hiliteColor_(bgcol)
 			.selectedStringColor_(Color.white)
 			.action_({|view|
@@ -143,7 +144,7 @@ RedDiskInPlayer {
 			.action_({|view|
 				view.value= view.value.max(0).round;
 			});
-		GUI.staticText.new(win, Rect(0, 0, GUI.stringBounds("filter", fnt).width, h))
+		GUI.staticText.new(win, Rect(0, 0, "filter".bounds(fnt).width, h))
 			.string_("filter");
 		
 		win.view.children.do{|x| if(x.respondsTo('font_'), {x.font_(fnt)})};
