@@ -1,8 +1,13 @@
 //redFrik
 
-//todo:
-//* colours and font from skin
+//--changes090123:
+//changed boxColor_ to background_
+//ctrl click to reset volume to 0db
+
+//--todo:
+//* colours and font from skin?
 //* avoid n_set node not found when setting volume
+//* drag folder of soundfiles into listview
 
 RedDiskInPlayer {
 	var <sampler, <isPlaying= false, <soundFiles, <win,
@@ -30,48 +35,53 @@ RedDiskInPlayer {
 		win.view.decorator= FlowLayout(win.view.bounds);
 		
 		volNumView= GUI.numberBox.new(win, Rect(0, 0, w*0.25, h))
-			.boxColor_(bgcol)
+			.background_(bgcol)
 			.typingColor_(Color.white)
 			.value_(0)
-			.action_({|view|
+			.action_{|view|
 				volSldView.value= volSpec.unmap(view.value);
 				if(isPlaying, {sampler.amp= volNumView.value.dbamp});
-			});
+			};
 		volSldView= GUI.slider.new(win, Rect(0, 0, w*0.6, h))
 			.knobColor_(fgcol)
 			.value_(volSpec.unmap(0))
-			.action_({|view|
+			.action_{|view|
 				volNumView.value= volSpec.map(view.value).round(0.1);
 				if(isPlaying, {sampler.amp= volNumView.value.dbamp});
-			});
+			}
+			.mouseUpAction_{|view, x, y, mod|
+				if(mod&262144==262144, {			//ctrl to reset
+					{view.valueAction= volSpec.unmap(0)}.defer(0.1);
+				});
+			};
 		GUI.staticText.new(win, Rect(0, 0, "vol".bounds(fnt).width, h))
 			.string_("vol");
 		win.view.decorator.nextLine;
 		
 		envNumView= GUI.numberBox.new(win, Rect(0, 0, w*0.25, h))
-			.boxColor_(bgcol)
+			.background_(bgcol)
 			.typingColor_(Color.white)
 			.value_(0.05)
-			.action_({|view|
+			.action_{|view|
 				view.value= view.value.max(0);
 				envSldView.value= (view.value/10).min(1);
-			});
+			};
 		envSldView= GUI.slider.new(win, Rect(0, 0, w*0.6, h))
 			.knobColor_(fgcol)
-			.action_({|view|
+			.action_{|view|
 				envNumView.value= (view.value*10).round(0.1);
-			});
+			};
 		GUI.staticText.new(win, Rect(0, 0, "env".bounds(fnt).width, h))
 			.string_("env");
 		win.view.decorator.nextLine;
 		
 		busView= GUI.numberBox.new(win, Rect(0, 0, w*0.25, h))
-			.boxColor_(bgcol)
+			.background_(bgcol)
 			.typingColor_(Color.white)
 			.value_(argBus)
-			.action_({|view|
+			.action_{|view|
 				view.value= view.value.asInteger.max(0);
-			});
+			};
 		GUI.staticText.new(win, Rect(0, 0, "bus".bounds(fnt).width, h))
 			.string_("bus");
 		win.view.decorator.shift(10, 0);
@@ -102,13 +112,13 @@ RedDiskInPlayer {
 			.background_(bgcol)
 			.hiliteColor_(bgcol)
 			.selectedStringColor_(Color.white)
-			.action_({|view|
+			.action_{|view|
 				this.prUpdateInfo(view.value);
 				if(isPlaying, {
 					this.prStopFunc(view);
 				});
-			})
-			.enterKeyAction_({|view|
+			}
+			.enterKeyAction_{|view|
 				if(soundFiles[view.value].notNil, {
 					if(isPlaying, {
 						this.prStopFunc(view);
@@ -116,12 +126,12 @@ RedDiskInPlayer {
 						this.prPlayFunc(view);
 					});
 				});
-			});
+			};
 		win.view.decorator.nextLine;
 		
 		GUI.button.new(win, Rect(0, 0, w*0.4, h))
 			.states_([["folder...", fgcol, Color.clear]])
-			.action_({
+			.action_{
 				if(sampler.notNil, {sampler.free});
 				GUI.dialog.getPaths({|x|
 					soundFiles= SoundFile.collect(PathName(x[0]).pathOnly++"*");
@@ -135,15 +145,15 @@ RedDiskInPlayer {
 					this.prUpdateInfo(0);
 				});
 				listView.focus;
-			}).focus;
+			}.focus;
 		win.view.decorator.shift(10, 0);
 		filterView= GUI.numberBox.new(win, Rect(0, 0, w*0.2, h))
-			.boxColor_(bgcol)
+			.background_(bgcol)
 			.typingColor_(Color.white)
 			.value_(0)
-			.action_({|view|
+			.action_{|view|
 				view.value= view.value.max(0).round;
-			});
+			};
 		GUI.staticText.new(win, Rect(0, 0, "filter".bounds(fnt).width, h))
 			.string_("filter");
 		

@@ -6,6 +6,7 @@
 // 081221 now 8ch soudfiles maximum, added freeKey
 // 081225 added amp_
 // 081228 added isPlaying, playingKeys, RedDiskInPlayer with helpfile
+// 090423 bugfix RedAbstractSamplerVoice:free needed to close buffer.  thanks martin.
 
 //todo:
 //		gui quad player with listview, xfadetime, play/stop, pause/resume, vol
@@ -123,6 +124,7 @@ RedAbstractSamplerVoice {
 	free {|action|
 		isReleased= false;
 		synth.free;
+		buffer.close;
 		buffer.free({action.value});
 	}
 	defName {
@@ -207,4 +209,8 @@ d.play(\e);
 d.stop(\e);
 d.free;
 i.quit;
+
+s.quit;
+s.boot;
+a= RedDiskInSamplerGiga(s);a.prepareForPlay(\snd1, "sounds/a11wlk01-44_1.aiff");a.play(\snd1);a.free;a.prepareForPlay(\snd1, "sounds/break");a.play(\snd1);	//this should not play a glitchy mix of the two previous buffersa.free
 */
