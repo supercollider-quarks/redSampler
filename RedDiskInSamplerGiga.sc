@@ -4,15 +4,18 @@
 RedDiskInSamplerGiga : RedDiskInSampler {
 	//fast trigger version that re-cue files on .stop
 	//note: this can only handle ca 244 files due to unix system limitations of how many files allwed to be kept open at the same time! ("ulimit -u".unixCmd)
-	prCreateVoice {|sf, startFrame|
-		^RedDiskInGigaSamplerVoice(server, sf.path, sf.numChannels, startFrame, numFrames, sf.duration);
+	prCreateVoice {|sf, startFrame, argNumFrames|
+		^RedDiskInGigaSamplerVoice(server, sf.path, sf.numChannels, startFrame, argNumFrames ? numFrames, sf.duration);
 	}
 }
 
 RedDiskInGigaSamplerVoice : RedDiskInSamplerVoice {
 	play {|attack, sustain, release, amp, out, group, loop|
 		var name= this.defName;
-		if(loop==1, {name= name++"loop"});
+		switch(loop,
+			1, {name= name++"loop"},
+			2, {name= name++"loopEnv"}
+		);
 		isPlaying= true;
 		synth= Synth.head(group ?? {server.defaultGroup}, name, [
 			\i_out, out,

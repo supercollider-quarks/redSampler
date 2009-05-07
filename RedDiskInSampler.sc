@@ -32,11 +32,24 @@ RedDiskInSampler : RedAbstractSampler {				//playing sounds from disk
 					);
 					Out.ar(i_out, src*env*amp);
 				}, #['ir']).store;
+				SynthDef("redDiskInSampler-"++(i+1)++"loopEnv", {
+					|i_out= 0, bufnum, amp= 0.7, attack= 0.01, sustain, release= 0.1, gate= 1|
+					var src= DiskIn.ar(i+1, bufnum, 1);
+					var env= EnvGen.kr(
+						Env(#[0, 1, 1, 0], [attack, sustain, release], -4),
+						gate,
+						1,
+						0,
+						1,
+						2						//doneAction
+					);
+					Out.ar(i_out, src*env*amp);
+				}, #['ir']).store;
 			}
 		}
 	}
-	prCreateVoice {|sf, startFrame|
-		^RedDiskInSamplerVoice(server, sf.path, sf.numChannels, startFrame, numFrames, sf.duration);
+	prCreateVoice {|sf, startFrame, argNumFrames|
+		^RedDiskInSamplerVoice(server, sf.path, sf.numChannels, startFrame, argNumFrames ? numFrames, sf.duration);
 	}
 }
 
@@ -44,7 +57,10 @@ RedDiskInSamplerVoice : RedAbstractSamplerVoice {
 	defName {^"redDiskInSampler-"++channels}
 	play {|attack, sustain, release, amp, out, group, loop, ctrl|
 		var name= this.defName;
-		if(loop==1, {name= name++"loop"});
+		switch(loop,
+			1, {name= name++"loop"},
+			2, {name= name++"loopEnv"}
+		);
 		isPlaying= true;
 		synth= Synth.basicNew(name, server);
 		buffer.cueSoundFile(path, startFrame, {

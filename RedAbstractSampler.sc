@@ -7,6 +7,7 @@
 // 081225 added amp_
 // 081228 added isPlaying, playingKeys, RedDiskInPlayer with helpfile
 // 090423 bugfix RedAbstractSamplerVoice:free needed to close buffer.  thanks martin.
+// 090507 added numFrames argument to prepareForPlay.  useful mainly for RedSampler.  also loop:2
 
 //todo:
 //		gui quad player with listview, xfadetime, play/stop, pause/resume, vol
@@ -22,13 +23,13 @@ RedAbstractSampler {
 		keys= ();
 		server= argServer ?? Server.default;
 	}
-	prepareForPlay {|key, path, startFrame= 0|		//read file headers and allocate in advance
+	prepareForPlay {|key, path, startFrame= 0, numFrames|	//read file headers and allocate in advance
 		var sf;
 		if(server.serverRunning.not, {(this.class.asString++": server not running").error; this.halt});
 		sf= SoundFile.new;
 		if(sf.openRead(path).not, {(this.class.asString++": file not found_ "++path).error; sf.close; this.halt});
 		keys.put(key, {							//associate key with array of voice objects
-			this.prCreateVoice(sf, startFrame);
+			this.prCreateVoice(sf, startFrame, numFrames);
 		}.dup(overlaps));
 		sf.close;
 	}
@@ -100,7 +101,7 @@ RedAbstractSampler {
 		});
 		^voices									//returns an array of voice objects
 	}
-	prCreateVoice {|sf, startFrame|
+	prCreateVoice {|sf, startFrame, argNumFrames|
 		^this.subclassResponsibility(thisMethod)
 	}
 }

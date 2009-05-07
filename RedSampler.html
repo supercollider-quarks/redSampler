@@ -5,25 +5,25 @@
 <meta http-equiv="Content-Style-Type" content="text/css">
 <title></title>
 <meta name="Generator" content="Cocoa HTML Writer">
-<meta name="CocoaVersion" content="824.48">
+<meta name="CocoaVersion" content="949.43">
 <style type="text/css">
 p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
 p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 18.0px Helvetica; min-height: 22.0px}
 p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
 p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; color: #001fe8}
 p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; min-height: 12.0px}
-p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco}
-p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #0024b5}
-p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #9d281b}
-p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #606060}
-p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #843424}
+p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #000000}
+p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #0000bf}
+p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #000000; min-height: 12.0px}
+p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #bf0000}
+p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Monaco; color: #606060}
 span.s1 {font: 18.0px Helvetica}
 span.s2 {color: #000000}
 span.s3 {text-decoration: underline}
-span.s4 {color: #3b6c19}
+span.s4 {color: #007300}
 span.s5 {color: #606060}
-span.s6 {color: #9d281b}
-span.s7 {color: #45691f}
+span.s6 {color: #bf0000}
+span.s7 {color: #0000bf}
 span.Apple-tab-span {white-space:pre}
 </style>
 </head>
@@ -41,48 +41,85 @@ span.Apple-tab-span {white-space:pre}
 <p class="p5"><br></p>
 <p class="p6">s.boot;</p>
 <p class="p7"><span class="s2">a= </span>RedSampler<span class="s2">(s);</span></p>
-<p class="p5"><br></p>
-<p class="p8">//-- setting up which samples to use and prepare them</p>
-<p class="p9"><span class="s2">a.prepareForPlay(</span><span class="s4">\snd1</span><span class="s2">, </span>"sounds/a11wlk01-44_1.aiff"<span class="s2">);</span></p>
+<p class="p8"><br></p>
+<p class="p9">//-- setting up which samples to use and prepare them</p>
+<p class="p10"><span class="s2">a.prepareForPlay(</span><span class="s4">\snd1</span><span class="s2">, </span>"sounds/a11wlk01-44_1.aiff"<span class="s2">);</span></p>
 <p class="p6">a.prepareForPlay(<span class="s4">\snd2</span>, <span class="s5">"sounds/break"</span>);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="s6">//add your own soundfile</span></p>
-<p class="p6">a.prepareForPlay(<span class="s4">\snd3</span>, <span class="s5">"sounds/a11wlk01-44_1.aiff"</span>, 44100);<span class="Apple-tab-span">	</span><span class="s6">//offset 44100 samples</span></p>
-<p class="p5"><br></p>
-<p class="p8">//-- play</p>
-<p class="p8"><span class="s2">a.play(</span><span class="s4">\snd1</span><span class="s2">);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//play the whole soundfile</p>
+<p class="p6">a.prepareForPlay(<span class="s4">\snd3</span>, <span class="s5">"sounds/a11wlk01-44_1.aiff"</span>, 44100, 22050);<span class="Apple-tab-span">	</span><span class="s6">//offset 44100 samples, 0.5sec</span></p>
+<p class="p8"><br></p>
+<p class="p9">//-- play</p>
+<p class="p9"><span class="s2">a.play(</span><span class="s4">\snd1</span><span class="s2">);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//play the whole soundfile</p>
 <p class="p6">a.voicesLeft(<span class="s4">\snd1</span>)</p>
 <p class="p6">a.stop(<span class="s4">\snd1</span>);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="s6">//stop</span></p>
-<p class="p5"><br></p>
-<p class="p8"><span class="s2">a.play(</span><span class="s4">\snd1</span><span class="s2">, 1, 0, 0.05);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//play with slow attack and quick release</p>
-<p class="p5"><br></p>
-<p class="p8"><span class="s2">a.play(</span><span class="s4">\snd2</span><span class="s2">);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//play another sample</p>
+<p class="p8"><br></p>
+<p class="p9"><span class="s2">a.play(</span><span class="s4">\snd1</span><span class="s2">, 1, 0, 0.05);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//play with slow attack and quick release</p>
+<p class="p8"><br></p>
+<p class="p9"><span class="s2">a.play(</span><span class="s4">\snd2</span><span class="s2">);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//play another sample</p>
 <p class="p6">a.play(<span class="s4">\snd3</span>);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="s6">//and another</span></p>
-<p class="p6">a.play(<span class="s4">\snd3</span>, 0.1, 0.1, 0.1);<span class="Apple-tab-span">	</span><span class="s6">//very short</span></p>
-<p class="p5"><br></p>
-<p class="p6">a.play(<span class="s4">\snd2</span>, loop:1);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="s6">//looping</span></p>
-<p class="p10"><span class="s2">a.stop(</span><span class="s7">\snd2, 4</span><span class="s2">);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//stop with 4 second fadetime</p>
-<p class="p5"><br></p>
-<p class="p8"><span class="s2">(<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//start many at once</p>
+<p class="p6">a.play(<span class="s4">\snd3</span>, 0.1, 0, 0.1);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="s6">//very short</span></p>
+<p class="p9"><span class="s2">a.play(</span><span class="s4">\snd3</span><span class="s2">, 3, 3, 3, loop:2)<span class="Apple-tab-span">	</span></span>//using loop:2 to both have finite duration and loop on</p>
+<p class="p8"><br></p>
+<p class="p6">a.play(<span class="s4">\snd2</span>, loop:1);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="s6">//looping forever</span></p>
+<p class="p9"><span class="s2">a.stop(</span><span class="s4">\snd2</span><span class="s2">, 4);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//stop with 4 second fadetime</p>
+<p class="p8"><br></p>
+<p class="p9"><span class="s2">(<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//start many at once</p>
 <p class="p6">a.play(<span class="s4">\snd1</span>);</p>
 <p class="p6">a.play(<span class="s4">\snd2</span>);</p>
-<p class="p6">a.play(<span class="s4">\snd3</span>);</p>
+<p class="p6">a.play(<span class="s4">\snd3</span>, loop:1);</p>
 <p class="p6">)</p>
-<p class="p8"><span class="s2">a.flush(0);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//stop all right away</p>
-<p class="p5"><br></p>
+<p class="p9"><span class="s2">a.flush(0);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//stop all right away</p>
+<p class="p8"><br></p>
 <p class="p6">a.play(<span class="s4">\snd2</span>);</p>
 <p class="p6">a.play(<span class="s4">\snd2</span>);</p>
-<p class="p8"><span class="s2">a.voicesLeft(</span><span class="s4">\snd2</span><span class="s2">);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//check if any free voices</p>
+<p class="p9"><span class="s2">a.voicesLeft(</span><span class="s4">\snd2</span><span class="s2">);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//check if any free voices</p>
 <p class="p6">a.stop(<span class="s4">\snd2</span>, 0);</p>
 <p class="p6">a.stop(<span class="s4">\snd2</span>, 0);</p>
-<p class="p8"><span class="s2">a.voicesLeft(</span><span class="s4">\snd2</span><span class="s2">);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//check if any free voices</p>
-<p class="p5"><br></p>
-<p class="p8"><span class="s2">a.loadedKeys;<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//report all keys that have soundfiles loaded</p>
-<p class="p8"><span class="s2">a.overlaps;<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//how many voices allowed to play simultaneously</p>
-<p class="p5"><br></p>
-<p class="p8"><span class="s2">a.length(</span><span class="s4">\snd1</span><span class="s2">);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//how long is the soundfile in seconds</p>
-<p class="p8"><span class="s2">a.channels(</span><span class="s4">\snd1</span><span class="s2">);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//how many channels</p>
-<p class="p8"><span class="s2">a.buffers(</span><span class="s4">\snd1</span><span class="s2">);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//access buffers for a key.<span class="Apple-converted-space">  </span>one for each overlap</p>
-<p class="p5"><br></p>
-<p class="p8"><span class="s2">a.free;<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//stop and clear</p>
-<p class="p5"><br></p>
+<p class="p9"><span class="s2">a.voicesLeft(</span><span class="s4">\snd2</span><span class="s2">);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//check if any free voices</p>
+<p class="p8"><br></p>
+<p class="p9"><span class="s2">a.loadedKeys;<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//report all keys that have soundfiles loaded</p>
+<p class="p9"><span class="s2">a.overlaps;<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//how many voices allowed to play simultaneously</p>
+<p class="p8"><br></p>
+<p class="p9"><span class="s2">a.length(</span><span class="s4">\snd1</span><span class="s2">);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//how long is the soundfile in seconds</p>
+<p class="p6">a.length(<span class="s4">\snd3</span>);</p>
+<p class="p9"><span class="s2">a.channels(</span><span class="s4">\snd1</span><span class="s2">);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//how many channels</p>
+<p class="p9"><span class="s2">a.buffers(</span><span class="s4">\snd1</span><span class="s2">);<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//access buffers for a key.<span class="Apple-converted-space">  </span>one for each overlap</p>
+<p class="p8"><br></p>
+<p class="p9"><span class="s2">a.free;<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>//free synths, close files and free buffers</p>
+<p class="p8"><br></p>
+<p class="p8"><br></p>
+<p class="p8"><br></p>
+<p class="p9">//--example that play back short sections of all your soundfiles in your sounds directory</p>
+<p class="p6">s.boot;</p>
+<p class="p6">(</p>
+<p class="p7"><span class="s2">a= </span>RedSampler<span class="s2">(s);</span></p>
+<p class="p6">p= <span class="s7">PathName</span>(<span class="s5">"sounds"</span>).deepFiles.select{<span class="s7">|x|</span></p>
+<p class="p6"><span class="Apple-tab-span">	</span><span class="s7">var</span> sf= <span class="s7">SoundFile</span>.openRead(x.fullPath);</p>
+<p class="p6"><span class="Apple-tab-span">	</span>if(sf.notNil, {</p>
+<p class="p6"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>sf.close;</p>
+<p class="p7"><span class="s2"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>true<span class="s2">;</span></p>
+<p class="p6"><span class="Apple-tab-span">	</span>}, {</p>
+<p class="p7"><span class="s2"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span></span>false<span class="s2">;</span></p>
+<p class="p6"><span class="Apple-tab-span">	</span>});</p>
+<p class="p6">};</p>
+<p class="p6">p.do{<span class="s7">|x|</span></p>
+<p class="p6"><span class="Apple-tab-span">	</span><span class="s7">var</span> sf= <span class="s7">SoundFile</span>(x.fullPath);</p>
+<p class="p6"><span class="Apple-tab-span">	</span><span class="s7">var</span> len= if(sf.numFrames&lt;44100, {-1}, {sf.numFrames.rand});</p>
+<p class="p6"><span class="Apple-tab-span">	</span>(<span class="s5">"loading..."</span>+x.fullPath).postln;</p>
+<p class="p6"><span class="Apple-tab-span">	</span>a.prepareForPlay(sf.path, sf.path, sf.numFrames.rand, len);</p>
+<p class="p6"><span class="Apple-tab-span">	</span>sf.close;</p>
+<p class="p6">};</p>
+<p class="p6">r= <span class="s7">Routine</span>.run{</p>
+<p class="p6"><span class="Apple-tab-span">	</span>1.wait;</p>
+<p class="p6"><span class="Apple-tab-span">	</span><span class="s7">inf</span>.do{</p>
+<p class="p6"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>a.play(a.loadedKeys.choose.postln, 4, 2.rrand(6), 4, loop:2);</p>
+<p class="p6"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>2.rrand(5).wait;</p>
+<p class="p6"><span class="Apple-tab-span">	</span>};</p>
+<p class="p6">};</p>
+<p class="p6">)</p>
+<p class="p8"><br></p>
+<p class="p8"><br></p>
+<p class="p6">r.stop;</p>
+<p class="p6">a.free;</p>
+<p class="p8"><br></p>
 </body>
 </html>

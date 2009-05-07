@@ -45,11 +45,37 @@ RedSampler : RedAbstractSampler {					//playing buffers in ram
 					);
 					Out.ar(i_out, src*env*amp);
 				}, #['ir']).store;
+				SynthDef("redSampler-"++(i+1)++"loopEnv", {
+					|i_out= 0, bufnum, amp= 0.7, attack= 0.01, sustain, release= 0.1, gate= 1, offset= 0|
+					var src= PlayBuf.ar(
+						i+1,
+						bufnum,
+						BufRateScale.ir(bufnum),
+						1,
+						BufFrames.ir(bufnum)*offset,
+						1
+					);
+					var env= EnvGen.kr(
+						Env(#[0, 1, 1, 0], [attack, sustain, release], -4),
+						gate,
+						1,
+						0,
+						1,
+						2						//doneAction
+					);
+					Out.ar(i_out, src*env*amp);
+				}, #['ir']).store;
 			}
 		}
 	}
-	prCreateVoice {|sf, startFrame|
-		^RedSamplerVoice(server, sf.path, sf.numChannels, startFrame, nil, sf.duration);
+	prCreateVoice {|sf, startFrame, argNumFrames|
+		var len;
+		if(argNumFrames.notNil, {
+			len= argNumFrames/sf.sampleRate;
+		}, {
+			len= sf.numFrames-startFrame/sf.sampleRate;
+		});
+		^RedSamplerVoice(server, sf.path, sf.numChannels, startFrame, argNumFrames, len);
 	}
 }
 
@@ -57,7 +83,10 @@ RedSamplerVoice : RedAbstractSamplerVoice {
 	defName {^"redSampler-"++channels}
 	play {|attack, sustain, release, amp, out, group, loop|
 		var name= this.defName;
-		if(loop==1, {name= name++"loop"});
+		switch(loop,
+			1, {name= name++"loop"},
+			2, {name= name++"loopEnv"}
+		);
 		isPlaying= true;
 		synth= Synth.head(group ?? {server.defaultGroup}, name, [
 			\i_out, out,
@@ -76,6 +105,7 @@ RedSamplerVoice : RedAbstractSamplerVoice {
 		}).add;
 	}
 	prAllocBuffer {|action|
-		buffer= Buffer.read(server, path, startFrame, -1, action)
+		var num= numFrames ? -1;
+		buffer= Buffer.read(server, path, startFrame, num, action)
 	}
 }
