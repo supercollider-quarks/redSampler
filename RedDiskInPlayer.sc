@@ -1,5 +1,9 @@
 //redFrik
 
+//--changes090829:
+//drag and drop from finder using a dragsink
+//--changes090613:
+//no longer use the GUI redirect (GUI.button.new became Button)
 //--changes090123:
 //changed boxColor_ to background_
 //ctrl click to reset volume to 0db
@@ -7,7 +11,6 @@
 //--todo:
 //* colours and font from skin?
 //* avoid n_set node not found when setting volume
-//* drag folder of soundfiles into listview
 
 RedDiskInPlayer {
 	var <sampler, <isPlaying= false, <soundFiles, <win,
@@ -22,19 +25,19 @@ RedDiskInPlayer {
 			server= argServer ?? Server.default,
 			w= 160,								//widget max width
 			h= 18,								//widget height
-			fnt= GUI.font.new("Monaco", 9),			//later from skin
+			fnt= Font("Monaco", 9),					//later from skin
 			volSpec= [-90, 6, \db].asSpec;
 		
 		bgcol= Color.red(0.8);						//later from skin
 		fgcol= Color.black;						//later from skin
 		soundFiles= [];
 		
-		win= GUI.window.new(this.class.name, Rect(500, 200, w+10, h*15), false);
+		win= Window(this.class.name, Rect(500, 200, w+10, h*15), false);
 		win.alpha_(0.9);
 		win.view.background= bgcol;
 		win.view.decorator= FlowLayout(win.view.bounds);
 		
-		volNumView= GUI.numberBox.new(win, Rect(0, 0, w*0.25, h))
+		volNumView= NumberBox(win, Rect(0, 0, w*0.25, h))
 			.background_(bgcol)
 			.typingColor_(Color.white)
 			.value_(0)
@@ -42,7 +45,7 @@ RedDiskInPlayer {
 				volSldView.value= volSpec.unmap(view.value);
 				if(isPlaying, {sampler.amp= volNumView.value.dbamp});
 			};
-		volSldView= GUI.slider.new(win, Rect(0, 0, w*0.6, h))
+		volSldView= Slider(win, Rect(0, 0, w*0.6, h))
 			.knobColor_(fgcol)
 			.value_(volSpec.unmap(0))
 			.action_{|view|
@@ -54,11 +57,11 @@ RedDiskInPlayer {
 					{view.valueAction= volSpec.unmap(0)}.defer(0.1);
 				});
 			};
-		GUI.staticText.new(win, Rect(0, 0, "vol".bounds(fnt).width, h))
+		StaticText(win, Rect(0, 0, "vol".bounds(fnt).width, h))
 			.string_("vol");
 		win.view.decorator.nextLine;
 		
-		envNumView= GUI.numberBox.new(win, Rect(0, 0, w*0.25, h))
+		envNumView= NumberBox(win, Rect(0, 0, w*0.25, h))
 			.background_(bgcol)
 			.typingColor_(Color.white)
 			.value_(0.05)
@@ -66,36 +69,36 @@ RedDiskInPlayer {
 				view.value= view.value.max(0);
 				envSldView.value= (view.value/10).min(1);
 			};
-		envSldView= GUI.slider.new(win, Rect(0, 0, w*0.6, h))
+		envSldView= Slider(win, Rect(0, 0, w*0.6, h))
 			.knobColor_(fgcol)
 			.action_{|view|
 				envNumView.value= (view.value*10).round(0.1);
 			};
-		GUI.staticText.new(win, Rect(0, 0, "env".bounds(fnt).width, h))
+		StaticText(win, Rect(0, 0, "env".bounds(fnt).width, h))
 			.string_("env");
 		win.view.decorator.nextLine;
 		
-		busView= GUI.numberBox.new(win, Rect(0, 0, w*0.25, h))
+		busView= NumberBox(win, Rect(0, 0, w*0.25, h))
 			.background_(bgcol)
 			.typingColor_(Color.white)
 			.value_(argBus)
 			.action_{|view|
 				view.value= view.value.asInteger.max(0);
 			};
-		GUI.staticText.new(win, Rect(0, 0, "bus".bounds(fnt).width, h))
+		StaticText(win, Rect(0, 0, "bus".bounds(fnt).width, h))
 			.string_("bus");
 		win.view.decorator.shift(10, 0);
-		loopView= GUI.button.new(win, Rect(0, 0, w*0.4, h))
+		loopView= Button(win, Rect(0, 0, w*0.4, h))
 			.states_([["loop", fgcol, Color.clear], ["loop", bgcol, fgcol]]);
 		win.view.decorator.nextLine;
 		
 		win.view.decorator.shift(10, 0);
-		incView= GUI.staticText.new(win, Rect(0, 0, w*0.4, h)).string_("0:00");
+		incView= StaticText(win, Rect(0, 0, w*0.4, h)).string_("0:00");
 		win.view.decorator.shift(10, 0);
-		decView= GUI.staticText.new(win, Rect(0, 0, w*0.4, h)).string_("0:00.0");
+		decView= StaticText(win, Rect(0, 0, w*0.4, h)).string_("0:00.0");
 		win.view.decorator.nextLine;
 		
-		progressView= GUI.multiSliderView.new(win, Rect(0, 0, w, h))
+		progressView= MultiSliderView(win, Rect(0, 0, w, h))
 			.indexIsHorizontal_(false)
 			.editable_(false)
 			.indexThumbSize_(h)
@@ -105,10 +108,27 @@ RedDiskInPlayer {
 			.value_([0]);
 		win.view.decorator.nextLine;
 		
-		infoView= GUI.staticText.new(win, Rect(0, 0, w, h));
+		infoView= StaticText(win, Rect(0, 0, w, h));
 		win.view.decorator.nextLine;
 		
-		listView= GUI.listView.new(win, Rect(0, 0, w, h*argNumItems))
+		listView= ListView(win, Rect(0, 0, w, h*argNumItems))
+			.canReceiveDragHandler_{View.currentDrag.isKindOf(Array)}
+			.receiveDragHandler_{|view|
+				var path= PathName(View.currentDrag[0]);
+				if(path.isFolder, {
+					soundFiles= SoundFile.collect(path.fullPath++"/*");
+				}, {
+					soundFiles= SoundFile.collect(path.pathOnly++"*");
+				});
+				if(filterView.value>0, {
+					soundFiles= soundFiles.select{|x| x.numChannels==filterView.value};
+				});
+				soundFiles.do{|x, i|
+					sampler.prepareForPlay(i, x.path);
+				};
+				view.items= soundFiles.collect{|x| PathName(x.path).fileName};
+				this.prUpdateInfo(0);
+			}
 			.background_(bgcol)
 			.hiliteColor_(bgcol)
 			.selectedStringColor_(Color.white)
@@ -129,12 +149,13 @@ RedDiskInPlayer {
 			};
 		win.view.decorator.nextLine;
 		
-		GUI.button.new(win, Rect(0, 0, w*0.4, h))
+		Button(win, Rect(0, 0, w*0.4, h))
 			.states_([["folder...", fgcol, Color.clear]])
 			.action_{
 				if(sampler.notNil, {sampler.free});
-				GUI.dialog.getPaths({|x|
-					soundFiles= SoundFile.collect(PathName(x[0]).pathOnly++"*");
+				Dialog.getPaths({|x|
+					var path= PathName(x[0]);
+					soundFiles= SoundFile.collect(path.pathOnly++"*");
 					if(filterView.value>0, {
 						soundFiles= soundFiles.select{|x| x.numChannels==filterView.value};
 					});
@@ -147,27 +168,28 @@ RedDiskInPlayer {
 				listView.focus;
 			}.focus;
 		win.view.decorator.shift(10, 0);
-		filterView= GUI.numberBox.new(win, Rect(0, 0, w*0.2, h))
+		filterView= NumberBox(win, Rect(0, 0, w*0.2, h))
 			.background_(bgcol)
 			.typingColor_(Color.white)
 			.value_(0)
 			.action_{|view|
 				view.value= view.value.max(0).round;
 			};
-		GUI.staticText.new(win, Rect(0, 0, "filter".bounds(fnt).width, h))
+		StaticText(win, Rect(0, 0, "filter".bounds(fnt).width, h))
 			.string_("filter");
 		
 		win.view.children.do{|x| if(x.respondsTo('font_'), {x.font_(fnt)})};
 		win.bounds= win.bounds.setExtent(win.bounds.width, win.view.decorator.currentBounds.height+4);
-		CmdPeriod.doOnce({if(win.isClosed.not, {win.close})});
-		win.onClose= {incdecTask.stop; sampler.free};
-		win.front;
-		
 		Routine.run{
-			var halt= Condition.new;
-			server.bootSync(halt);
+			server.bootSync;
 			sampler= RedDiskInSampler(server);
-			server.sync(halt);
+			server.sync;
+			
+			CmdPeriod.doOnce({if(win.isClosed.not, {win.close})});
+			win.onClose= {incdecTask.stop; sampler.free};
+			defer{
+				win.front;
+			};
 		};
 	}
 	bus {

@@ -4,6 +4,7 @@
 RedDiskInSamplerGiga : RedDiskInSampler {
 	//fast trigger version that re-cue files on .stop
 	//note: this can only handle ca 244 files due to unix system limitations of how many files allwed to be kept open at the same time! ("ulimit -u".unixCmd)
+	//can be overridden with "launchctl limit maxfiles 2048 unlimited".unixCmd
 	prCreateVoice {|sf, startFrame, argNumFrames|
 		^RedDiskInGigaSamplerVoice(server, sf.path, sf.numChannels, startFrame, argNumFrames ? numFrames, sf.duration);
 	}
