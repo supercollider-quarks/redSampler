@@ -1,6 +1,6 @@
 CLASS:: RedLoop
 SUMMARY:: loop a soundfile from memory
-CATEGORIES:: Red
+CATEGORIES:: Red>redSampler
 RELATED:: Classes/RedLoopDisk, Classes/RedSampler, Classes/RedDiskInPlayer
 
 DESCRIPTION::

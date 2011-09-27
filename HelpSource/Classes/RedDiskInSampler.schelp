@@ -1,6 +1,6 @@
 CLASS:: RedDiskInSampler
 SUMMARY:: playing soundfiles from disk
-CATEGORIES:: Red
+CATEGORIES:: Red>redSampler
 RELATED:: Classes/RedDiskInSamplerGiga, Classes/RedSampler, Classes/RedDiskInPlayer
 
 DESCRIPTION::

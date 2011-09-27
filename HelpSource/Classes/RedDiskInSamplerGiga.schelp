@@ -1,6 +1,6 @@
 CLASS:: RedDiskInSamplerGiga
 SUMMARY:: playing soundfiles from disk - fast trigger version
-CATEGORIES:: Red
+CATEGORIES:: Red>redSampler
 RELATED:: Classes/RedDiskInSampler, Classes/RedSampler, Classes/RedDiskInPlayer
 
 DESCRIPTION::

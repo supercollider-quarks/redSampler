@@ -1,6 +1,6 @@
 CLASS:: RedDiskInPlayer
 SUMMARY:: simple GUI for soundfile playback from disk
-CATEGORIES:: Red
+CATEGORIES:: Red>redSampler
 RELATED:: Classes/RedDiskInSampler
 
 DESCRIPTION::
