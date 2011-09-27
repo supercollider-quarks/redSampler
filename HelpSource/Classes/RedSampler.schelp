@@ -1,7 +1,7 @@
 CLASS:: RedSampler
-summary:: playing soundfiles from memory
-categories:: Red
-related:: Classes/RedDiskInSampler, Classes/RedDiskInSamplerGiga, Classes/RedDiskInPlayer
+SUMMARY:: playing soundfiles from memory
+CATEGORIES:: Red
+RELATED:: Classes/RedDiskInSampler, Classes/RedDiskInSamplerGiga, Classes/RedDiskInPlayer
 
 DESCRIPTION::
 Nothing fancy. This class just loads soundfiles into RAM and then uses link::Classes/PlayBuf:: to play them back. It uses the same interface as link::Classes/RedDiskInSampler::.
