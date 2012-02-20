@@ -21,9 +21,9 @@ s.boot;
 a= RedSampler(s);
 
 //-- setting up which samples to use and prepare them
-a.prepareForPlay(\snd1, "sounds/a11wlk01-44_1.aiff");
-a.prepareForPlay(\snd2, "sounds/break");				//add your own soundfile
-a.prepareForPlay(\snd3, "sounds/a11wlk01-44_1.aiff", 44100, 22050);	//offset 44100 samples, 0.5sec
+a.prepareForPlay(\snd1, Platform.resourceDir +/+ "sounds/a11wlk01-44_1.aiff");
+a.prepareForPlay(\snd2, "~/sounds/break.wav".standardizePath);	//add your own soundfile
+a.prepareForPlay(\snd3, Platform.resourceDir +/+ "sounds/a11wlk01-44_1.aiff", 44100, 22050);	//offset 44100 samples, 0.5sec
 
 //-- play
 a.play(\snd1);			//play the whole soundfile
@@ -69,8 +69,9 @@ code::
 //--example that play back short sections of all your soundfiles in your sounds directory
 s.boot;
 (
+var root= "~/sounds".standardizePath;	//edit this!
 a= RedSampler(s);
-p= PathName("sounds").deepFiles.select{|x|
+p= PathName(root).deepFiles.select{|x|
 	var sf= SoundFile.openRead(x.fullPath);
 	if(sf.notNil, {
 		sf.close;
@@ -106,7 +107,7 @@ s.boot;
 a= RedSampler(s);
 (
 10.do{|x|
-	a.prepareForPlay(("cut"++x).asSymbol, "sounds/a11wlk01-44_1.aiff", 100000.linrand, 50000.linrand);	//key, path, offset and length
+	a.prepareForPlay(("cut"++x).asSymbol, Platform.resourceDir +/+ "sounds/a11wlk01-44_1.aiff", 100000.linrand, 50000.linrand); //key, path, offset and length
 };
 )
 a.play(\cut3);	//quick test

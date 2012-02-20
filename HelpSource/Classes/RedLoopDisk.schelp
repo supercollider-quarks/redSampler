@@ -33,7 +33,7 @@ Stops playing and frees the buffer.
 EXAMPLES::
 
 code::
-a= RedLoopDisk(Help.dir +/+ "sounds/a11wlk01-44_1.aiff")
+a= RedLoopDisk(Platform.resourceDir +/+ "sounds/a11wlk01-44_1.aiff")
 a.amp= 0.3
 a.channels
 a.length

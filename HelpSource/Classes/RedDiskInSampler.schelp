@@ -123,9 +123,9 @@ s.boot;
 a= RedDiskInSampler(s);
 
 //-- setting up which samples to use and prepare them
-a.prepareForPlay(\snd1, Help.dir +/+ "sounds/a11wlk01-44_1.aiff");
-a.prepareForPlay(\snd2, Help.dir +/+ "sounds/break");			//add your own soundfile
-a.prepareForPlay(\snd3, Help.dir +/+ "sounds/a11wlk01-44_1.aiff", 44100);	//offset 44100 samples
+a.prepareForPlay(\snd1, Platform.resourceDir +/+ "sounds/a11wlk01-44_1.aiff");
+a.prepareForPlay(\snd2, "~/sounds/break.wav".standardizePath);	//add your own soundfile
+a.prepareForPlay(\snd3, Platform.resourceDir +/+ "sounds/a11wlk01-44_1.aiff", 44100);	//offset 44100 samples
 
 //-- play
 a.play(\snd1);			//play the whole soundfile
