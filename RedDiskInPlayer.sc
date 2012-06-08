@@ -33,7 +33,9 @@ RedDiskInPlayer {
 		soundFiles= [];
 		
 		win= Window(this.class.name, Rect(500, 200, w+10, h*15), false);
-		win.alpha_(0.9);
+		if(Main.versionAtMost(3, 4) and:{GUI.scheme!=\cocoa}, {
+			win.alpha_(0.9);
+		});
 		win.view.background= bgcol;
 		win.view.decorator= FlowLayout(win.view.bounds);
 		
@@ -110,7 +112,7 @@ RedDiskInPlayer {
 		
 		infoView= StaticText(win, Rect(0, 0, w, h));
 		win.view.decorator.nextLine;
-		
+		
 		listView= ListView(win, Rect(0, 0, w, h*argNumItems))
 			.canReceiveDragHandler_{View.currentDrag.isKindOf(Array)}
 			.receiveDragHandler_{|view|
@@ -186,8 +188,9 @@ RedDiskInPlayer {
 			server.sync;
 			
 			CmdPeriod.doOnce({if(win.isClosed.not, {win.close})});
-			win.onClose= {incdecTask.stop; sampler.free};
+			
 			defer{
+				win.onClose= {incdecTask.stop; sampler.free};
 				win.front;
 			};
 		};
