@@ -3,7 +3,7 @@
 
 RedSampler : RedAbstractSampler {					//playing buffers in ram
 	*initClass {
-		StartUp.add{
+		ServerBoot.addToAll({
 			8.do{|i|								//change here for more channels than 8
 				SynthDef("redSampler-"++(i+1), {
 					|i_out= 0, bufnum, amp= 0.7, attack= 0.01, sustain, release= 0.1, gate= 1, offset= 0|
@@ -24,7 +24,7 @@ RedSampler : RedAbstractSampler {					//playing buffers in ram
 						2						//doneAction
 					);
 					Out.ar(i_out, src*env*amp);
-				}, #['ir']).store;
+				}, #['ir']).add;
 				SynthDef("redSampler-"++(i+1)++"loop", {
 					|i_out= 0, bufnum, amp= 0.7, attack= 0.01, release= 0.1, gate= 1, offset= 0|
 					var src= PlayBuf.ar(
@@ -44,7 +44,7 @@ RedSampler : RedAbstractSampler {					//playing buffers in ram
 						2						//doneAction
 					);
 					Out.ar(i_out, src*env*amp);
-				}, #['ir']).store;
+				}, #['ir']).add;
 				SynthDef("redSampler-"++(i+1)++"loopEnv", {
 					|i_out= 0, bufnum, amp= 0.7, attack= 0.01, sustain, release= 0.1, gate= 1, offset= 0|
 					var src= PlayBuf.ar(
@@ -64,9 +64,9 @@ RedSampler : RedAbstractSampler {					//playing buffers in ram
 						2						//doneAction
 					);
 					Out.ar(i_out, src*env*amp);
-				}, #['ir']).store;
+				}, #['ir']).add;
 			}
-		}
+		});
 	}
 	prCreateVoice {|sf, startFrame, argNumFrames|
 		var len;

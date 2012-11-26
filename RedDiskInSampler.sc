@@ -4,7 +4,7 @@
 RedDiskInSampler : RedAbstractSampler {				//playing sounds from disk
 	var <>numFrames= 32768;							//preload buffer size in samples
 	*initClass {
-		StartUp.add{
+		ServerBoot.addToAll({
 			8.do{|i|								//change here for more channels than 8
 				SynthDef("redDiskInSampler-"++(i+1), {
 					|i_out= 0, bufnum, amp= 0.7, attack= 0.01, sustain, release= 0.1, gate= 1|
@@ -18,7 +18,7 @@ RedDiskInSampler : RedAbstractSampler {				//playing sounds from disk
 						2						//doneAction
 					);
 					Out.ar(i_out, src*env*amp);
-				}, #['ir']).store;
+				}, #['ir']).add;
 				SynthDef("redDiskInSampler-"++(i+1)++"loop", {
 					|i_out= 0, bufnum, amp= 0.7, attack= 0.01, release= 0.1, gate= 1|
 					var src= DiskIn.ar(i+1, bufnum, 1);
@@ -31,7 +31,7 @@ RedDiskInSampler : RedAbstractSampler {				//playing sounds from disk
 						2						//doneAction
 					);
 					Out.ar(i_out, src*env*amp);
-				}, #['ir']).store;
+				}, #['ir']).add;
 				SynthDef("redDiskInSampler-"++(i+1)++"loopEnv", {
 					|i_out= 0, bufnum, amp= 0.7, attack= 0.01, sustain, release= 0.1, gate= 1|
 					var src= DiskIn.ar(i+1, bufnum, 1);
@@ -44,9 +44,9 @@ RedDiskInSampler : RedAbstractSampler {				//playing sounds from disk
 						2						//doneAction
 					);
 					Out.ar(i_out, src*env*amp);
-				}, #['ir']).store;
+				}, #['ir']).add;
 			}
-		}
+		});
 	}
 	prCreateVoice {|sf, startFrame, argNumFrames|
 		^RedDiskInSamplerVoice(server, sf.path, sf.numChannels, startFrame, argNumFrames ? numFrames, sf.duration);

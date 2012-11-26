@@ -8,6 +8,7 @@
 // 081228 added isPlaying, playingKeys, RedDiskInPlayer with helpfile
 // 090423 bugfix RedAbstractSamplerVoice:free needed to close buffer.  thanks martin.
 // 090507 added numFrames argument to prepareForPlay.  useful mainly for RedSampler.  also loop:2
+// 121126 changed synthdef creation from StartUp.add to ServerBoot.addToAll and .store to .add
 
 //todo:
 //		gui quad player with listview, xfadetime, play/stop, pause/resume, vol
