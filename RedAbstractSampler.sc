@@ -9,6 +9,7 @@
 // 090423 bugfix RedAbstractSamplerVoice:free needed to close buffer.  thanks martin.
 // 090507 added numFrames argument to prepareForPlay.  useful mainly for RedSampler.  also loop:2
 // 121126 changed synthdef creation from StartUp.add to ServerBoot.addToAll and .store to .add
+// 171223 changed from OSCresponderNode to onFree
 
 //todo:
 //		gui quad player with listview, xfadetime, play/stop, pause/resume, vol
@@ -57,7 +58,7 @@ RedAbstractSampler {
 		var voices;
 		if((voices= keys[key]).notNil, {^voices.any{|x| x.isPlaying}}, {^false});
 	}
-	
+
 	//play with finite duration - if sustain=nil then use file length
 	play {|key, attack= 0, sustain, release= 0, amp= 0.7, out= 0, group, loop= 0|
 		var voc= this.prVoices(key).detect{|x|
@@ -93,7 +94,7 @@ RedAbstractSampler {
 		keys.do{|voices| voices.do{|x| x.free}};
 		keys= ();
 	}
-	
+
 	//--private
 	prVoices {|key|
 		var voices= keys[key];						//find all voices objects for this key
@@ -109,7 +110,7 @@ RedAbstractSampler {
 
 RedAbstractSamplerVoice {
 	var server, path, <channels, startFrame, numFrames, <length,
-		<buffer, <synth, <isPlaying= false, <isReleased= false;
+	<buffer, <synth, <isPlaying= false, <isReleased= false;
 	*new {|server, path, channels, startFrame, numFrames, length|
 		^super.newCopyArgs(server, path, channels, startFrame, numFrames, length).prAllocBuffer
 	}
@@ -143,7 +144,7 @@ s.stopAliveThread;
 s.dumpOSC(1)
 d= RedDiskInSampler(s);	//normal
 d= RedDiskInSamplerGiga(s);	//normal
-d.preload(\e, "sounds/bosen44100/56/E2.aif");
+d.preload(\e, "~/Documents/soundfiles/bosen44100/56/E2.aif".standardizePath);
 d.play(\e, 0, 0.11, 0.1);
 d.play(\e, 0, 0.3, 0);
 d.play(\e, 0, 0.1, 0);
@@ -160,9 +161,9 @@ d.free
 s.boot;
 d= RedDiskInSampler(s);	//normal
 d= RedDiskInSamplerGiga(s);	//or fast trigger version
-d.preload(\a, "sounds/bosen44100/56/A2.aif");
-d.preload(\f, "sounds/bosen44100/40/F2.aif");
-d.preload(\e, "sounds/bosen44100/56/E2.aif");
+d.preload(\a, "~/Documents/soundfiles/bosen44100/56/A2.aif".standardizePath);
+d.preload(\f, "~/Documents/soundfiles/bosen44100/40/F2.aif".standardizePath);
+d.preload(\e, "~/Documents/soundfiles/bosen44100/56/E2.aif".standardizePath);
 d.voicesLeft(\e)
 d.play(\e, 0.2, 0.5, 1);	//key, attackTime, amp, outbus
 d.stop(\e, 1.0);			//key, releaseTime
@@ -193,7 +194,7 @@ s.boot;
 ~efxGrp= Group.tail(s);
 d= RedDiskInSampler(s);	//normal
 d= RedDiskInSamplerGiga(s);	//or fast trigger version
-d.preload(\e, "sounds/bosen44100/56/E2.aif");
+d.preload(\e, "~/Documents/soundfiles/bosen44100/56/E2.aif".standardizePath);
 e= SynthDef("ringmod", {Out.ar(0, In.ar(0, 2)*LPF.ar(BrownNoise.ar, 90))}).play(~efxGrp);
 d.play(\e);
 d.stop(\e);
@@ -214,5 +215,11 @@ i.quit;
 
 s.quit;
 s.boot;
-a= RedDiskInSamplerGiga(s);a.prepareForPlay(\snd1, "sounds/a11wlk01-44_1.aiff");a.play(\snd1);a.free;a.prepareForPlay(\snd1, "sounds/break");a.play(\snd1);	//this should not play a glitchy mix of the two previous buffersa.free
+a= RedDiskInSamplerGiga(s);
+a.prepareForPlay(\snd1, Platform.resourceDir+/+"sounds/a11wlk01-44_1.aiff");
+a.play(\snd1);
+a.free;
+a.prepareForPlay(\snd1, "~/Documents/soundfiles/jongly.aif".standardizePath);
+a.play(\snd1);	//this should not play a glitchy mix of the two previous buffers
+a.free
 */

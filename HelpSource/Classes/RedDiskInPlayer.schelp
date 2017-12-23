@@ -6,6 +6,8 @@ RELATED:: Classes/RedDiskInSampler
 DESCRIPTION::
 Uses link::Classes/RedDiskInSampler:: to stream soundfiles from disk. Use it to play back long soundfiles.
 
+Drag and drop some soundfiles or a folder on the gui. Use ARROW KEYS to navigate and ENTER to play.
+
 The GUI works as follows...
 table::
 ## vol || playback volume
@@ -14,6 +16,10 @@ table::
 ## loop || keep repeating the soundfile. Note: not smooth because of file preloading
 ## folder || select a file to set path to all soundfiles. It is also possible to drag files and folders into the listview
 ## filter || 0 = all soundfiles, 1 = only mono files, 2 = stereo etc.
+::
+
+NOTE::
+Soundfiles with sample rate that differ from the server's current samplerate will play back at wrong speed. This because of how link::Classes/DiskIn:: works.
 ::
 
 CLASSMETHODS::
@@ -43,7 +49,7 @@ METHOD:: soundFiles
 Current files in list.
 
 METHOD:: bus
-Current outbut bus.
+Current outbus.
 
 METHOD:: free
 Closes the window and stops the synth.
@@ -59,5 +65,5 @@ a.sampler
 a.isPlaying
 a.soundFiles
 a.bus
-a.free		//or close the window, or press cmdperiod
+a.free		//or close the window, or press CmdPeriod
 ::

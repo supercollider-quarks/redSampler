@@ -6,6 +6,10 @@ RELATED:: Classes/RedLoop, Classes/RedDiskInSampler, Classes/RedDiskInPlayer
 DESCRIPTION::
 Nothing fancy. This class just streams a soundfile from disk using link::Classes/DiskIn::.
 
+NOTE::
+Soundfiles with sample rate that differ from the server's current samplerate will play back at wrong speed. This because of how link::Classes/DiskIn:: works.
+::
+
 CLASSMETHODS::
 
 METHOD:: new

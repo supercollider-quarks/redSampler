@@ -96,13 +96,10 @@ RedSamplerVoice : RedAbstractSamplerVoice {
 			\sustain, sustain ?? {(length-attack-release).max(0)},
 			\release, release
 		]);
-		OSCresponderNode(server.addr, '/n_end', {|t, r, m|
-			if(m[1]==synth.nodeID, {
-				isPlaying= false;
-				isReleased= false;
-				r.remove;
-			});
-		}).add;
+		synth.onFree({
+			isPlaying= false;
+			isReleased= false;
+		});
 	}
 	prAllocBuffer {|action|
 		var num= numFrames ? -1;

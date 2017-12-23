@@ -18,6 +18,15 @@ code::
 ::
 ::
 
+NOTE::
+Soundfiles with sample rate that differ from the server's current samplerate will play back at wrong speed. This because of how link::Classes/DiskIn:: works.
+::
+
+To test this class and see when and which files it loads, use the following command in terminal (osx only - xcode required)
+code::
+sudo opensnoop -n scsynth
+::
+
 INSTANCEMETHODS::
 
 PRIVATE:: prCreateVoice

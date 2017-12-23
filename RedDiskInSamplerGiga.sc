@@ -26,16 +26,14 @@ RedDiskInGigaSamplerVoice : RedDiskInSamplerVoice {
 			\sustain, sustain ?? {(length-attack-release).max(0)},
 			\release, release
 		]);
-		OSCresponderNode(server.addr, '/n_end', {|t, r, m|
-			if(m[1]==synth.nodeID, {
-				buffer.close;
+		synth.onFree({
+			if(buffer.bufnum.notNil, {
 				buffer.cueSoundFile(path, startFrame, {
 					isPlaying= false;
 					isReleased= false;
 				});
-				r.remove;
 			});
-		}).add;
+		});
 	}
 	prAllocBuffer {|action|
 		buffer= Buffer.cueSoundFile(server, path, startFrame, channels, numFrames, action)

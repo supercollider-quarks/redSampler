@@ -10,6 +10,10 @@ This class has a small delay before starting the sound as it buffers or 'cues' d
 
 Do not use this class for granular synthesis or for playing heaps of sounds at once. Remember that it streams data from disk. For playing very many soundfiles at once, use the link::Classes/RedSampler:: class.
 
+NOTE::
+Soundfiles with sample rate that differ from the server's current samplerate will play back at wrong speed. This because of how link::Classes/DiskIn:: works.
+::
+
 CLASSMETHODS::
 
 PRIVATE:: initClass
@@ -25,7 +29,7 @@ INSTANCEMETHODS::
 PRIVATE:: prCreateVoice
 
 METHOD:: prepareForPlay
-Attach a soundfile to a key (number or symbol) and create buffers - one for each overlapping voice. This method is also has the alias code::preload:: for backward compatability.
+Attach a soundfile to a key (number or symbol) and create buffers - one for each overlapping voice. This method is also has the alias code::preload:: for backward compatibility.
 
 ARGUMENT:: key
 A number or a symbol.
@@ -73,6 +77,9 @@ table::
 
 METHOD:: stop
 Stops one voice currently playing at this key.
+
+ARGUMENT:: key
+A number or a symbol.
 
 ARGUMENT:: release
 Release time is in seconds. The voice is stolen when the sound is fully released.

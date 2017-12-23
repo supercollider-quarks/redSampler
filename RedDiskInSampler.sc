@@ -64,14 +64,10 @@ RedDiskInSamplerVoice : RedAbstractSamplerVoice {
 		isPlaying= true;
 		synth= Synth.basicNew(name, server);
 		buffer.cueSoundFile(path, startFrame, {
-			OSCresponderNode(server.addr, '/n_end', {|t, r, m|
-				if(m[1]==synth.nodeID, {
-					buffer.close;
-					isPlaying= false;
-					isReleased= false;
-					r.remove;
-				});
-			}).add;
+			synth.onFree({
+				isPlaying= false;
+				isReleased= false;
+			});
 			synth.addToHeadMsg(group ?? {server.defaultGroup}, [
 				\i_out, out,
 				\bufnum, buffer.bufnum,
