@@ -11,4 +11,11 @@ s.boot;
 a= RedSampler(s);
 a.prepareForPlay(\snd1, Platform.resourceDir +/+ "sounds/a11wlk01-44_1.aiff");
 a.play(\snd1);
+a.free;
+
+//then there are simple wrapper classes like
+//RedLoop for looping a soundfile from disk
+a= RedLoopDisk(Platform.resourceDir +/+ "sounds/a11wlk01-44_1.aiff")
+a.amp= 0.3;
+a.free;
 ```

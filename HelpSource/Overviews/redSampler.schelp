@@ -1,0 +1,12 @@
+TITLE:: redSamplerOverview
+SUMMARY:: overview of redSampler classes
+CATEGORIES:: Red
+
+TABLE::
+## link::Classes/RedDiskInPlayer:: || simple GUI for soundfile playback from disk
+## link::Classes/RedDiskInSampler:: || playing soundfiles from disk
+## link::Classes/RedDiskInSamplerGiga:: || fast trigger version of RedDiskInSampler
+## link::Classes/RedLoop:: || loop a soundfile from memory (wrapper for RedSampler)
+## link::Classes/RedLoopDisk:: || loop a soundfile from disk (wrapper for RedDiskInSampler)
+## link::Classes/RedSampler:: || playing soundfiles from memory (with voice stealing)
+::
